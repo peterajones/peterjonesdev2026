@@ -77,9 +77,6 @@ a:hover.btnLink {
 .snippets-intro {
 	padding: 0;
 }
-.card-badges {
-	display: flex;
-}
 .card-badges > img {
 	height: 16px;
 	margin-right: 6px;
@@ -115,6 +112,12 @@ code.inline {
 }
 .dark .code-content p {
 	color: #f4f4f4;
+}
+.code-description-open li {
+  color: #000;
+}
+.dark .code-description-open li {
+  color: #fff;
 }
 .code-top h1 {
 	top: 10px;
@@ -227,12 +230,6 @@ a .card-title {
 a .card-intro {
 	padding: 20px 10px;
 	text-align: left;
-}
-.card-image {
-	position: relative;
-	height: 200px;
-	width: 100%;
-	overflow: hidden;
 }
 a .card-image img {
 	position: absolute;
