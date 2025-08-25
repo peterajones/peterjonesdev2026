@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react'
 import Head from 'next/head';
 import Link from 'next/link';
-import Image from "next/image";
+import Image from "next/legacy/image";
 import Banner from '../../Components/Banner'
 import badgeHTML from "../../public/images/code/badge-HTML.png";
 import badgeCSS from "../../public/images/code/badge-CSS.png";
@@ -14,6 +14,7 @@ import checkboxStyling from "../../public/images/code/checkbox-styling.jpg";
 import pagination from "../../public/images/code/pagination.jpg";
 import passwordGenerator from "../../public/images/code/password-generator.jpeg";
 import weatherApp from "../../public/images/code/weather-app.jpeg";
+import CurrencyConverter from "../../public/images/code/currency-converter.jpg";
 
 export default function Code() {
 	const [didMount, setDidMount] = useState(false);
@@ -41,7 +42,27 @@ export default function Code() {
                 <h1 className='projects page'>Projects</h1>
                 <ul className='items-container'>
                     <li className='item'>
-                        <Link href='/projects/weather-app'>
+                        <Link href='/projects/currency-converter' passHref legacyBehavior>
+                            <div className="card">
+                                <div className="card-badges">
+                                    <Image src={badgeHTML} alt="HTML" className='tech-badge' width={48} height={16} />
+                                    <Image src={badgeCSS} alt="CSS" className='tech-badge' width={48} height={16} />
+                                    <Image src={badgeJS} alt="JS" className='tech-badge' width={48} height={16} />
+                                </div>
+                                <div className="card-title">
+                                    <span>Currency Converter</span>
+                                </div>
+                                <div className="card-intro truncate">
+                                    <span>A handy currnecy converter</span>
+                                </div>
+                                <div className="card-image">
+                                    <Image src={CurrencyConverter} alt="Currency Converter" />
+                                </div>
+                            </div>
+                        </Link>
+                    </li>
+                    <li className='item'>
+                        <Link href='/projects/weather-app' passHref legacyBehavior>
                             <div className="card">
                                 <div className="card-badges">
                                     <Image src={badgeHTML} alt="HTML" className='tech-badge' width={48} height={16} />
@@ -55,13 +76,13 @@ export default function Code() {
                                     <span>A Weather App with a 5 day forecast.</span>
                                 </div>
                                 <div className="card-image">
-                                    <Image src={weatherApp} alt="Weather App" fill style={{objectFit: 'cover'}} />
+                                    <Image src={weatherApp} alt="Weather App" />
                                 </div>
                             </div>
                         </Link>
                     </li>
                     <li className='item'>
-                        <Link href='/projects/random-password-generator'>
+                        <Link href='/projects/random-password-generator' passHref legacyBehavior>
                             <div className="card">
                                 <div className="card-badges">
                                     <Image src={badgeREACT} alt="React"  className='tech-badge' width={48} height={16}/>
@@ -88,7 +109,7 @@ export default function Code() {
                         </Link>
                     </li>
                     <li className='item'>
-                        <Link href='/projects/pagination'>
+                        <Link href='/projects/pagination' passHref legacyBehavior>
                             <div className="card">
                                 <div className="card-badges">
                                     <Image src={badgeREACT} alt="React" className='tech-badge' width={48} height={16} />
@@ -105,13 +126,13 @@ export default function Code() {
                                     <span>Lots going on in this one!</span>
                                 </div>
                                 <div className="card-image">
-                                    <Image src={pagination} alt="Pagination" fill style={{objectFit: 'cover'}} />
+                                    <Image src={pagination} alt="Pagination" />
                                 </div>
                             </div>
                         </Link>
                     </li>
                     <li className='item'>
-                        <Link href='/projects/checkbox-styling'>
+                        <Link href='/projects/checkbox-styling' passHref legacyBehavior>
                             <div className="card">
                                 <div className="card-badges">
                                     <Image src={badgeHTML} alt="HTML" className='tech-badge' width={48} height={16} />
@@ -132,13 +153,13 @@ export default function Code() {
                                     <span>Click on this tile to see more...</span>
                                 </div>
                                 <div className="card-image">
-                                    <Image src={checkboxStyling} alt="Checkbox Styling" fill style={{objectFit: 'cover'}} />
+                                    <Image src={checkboxStyling} alt="Checkbox Styling" />
                                 </div>
                             </div>
                         </Link>
                     </li>
                     <li className='item'>
-                        <Link href='/projects/pizza-pie'>
+                        <Link href='/projects/pizza-pie' passHref legacyBehavior>
                             <div className="card">
                                 <div className="card-badges">
                                     <Image src={badgeHTML} alt="HTML" className='tech-badge' width={48} height={16} />
@@ -157,13 +178,13 @@ export default function Code() {
                                     <span>Click on this tile to see more...</span>
                                 </div>
                                 <div className="card-image">
-                                    <Image src={pizzaPie} alt="Pizza Pie" fill style={{objectFit: 'cover'}} />
+                                    <Image src={pizzaPie} alt="Pizza Pie" />
                                 </div>
                             </div>
                         </Link>
                     </li>
                     <li className='item'>
-                        <Link href='/projects/rollup-counter'>
+                        <Link href='/projects/rollup-counter' passHref legacyBehavior>
                             <div className="card">
                                 <div className="card-badges">
                                     <Image src={badgeCSS} alt="CSS" className='tech-badge' width={48} height={16} />
@@ -176,7 +197,7 @@ export default function Code() {
                                     <span>
                                         This is a vanilla Javascript version of a{" "}
                                         <code className="inline">react-transition-group</code>{" "}
-                                        animation that I saw on one of Wes Bos&apos; tutorials.
+                                        animation that I saw on one of Wes Bos' tutorials.
                                     </span>
                                     <span>
                                         As the counter increments, the numbers roll up to reveal
@@ -184,13 +205,13 @@ export default function Code() {
                                     </span>
                                 </div>
                                 <div className="card-image">
-                                    <Image src={rollupCounter} alt="Rollup Counter" fill style={{objectFit: 'cover'}} />
+                                    <Image src={rollupCounter} alt="Rollup Counter" />
                                 </div>
                             </div>
                         </Link>
                     </li>
                     <li className='item'>
-                        <Link href='/projects/js-clock'>
+                        <Link href='/projects/js-clock' passHref legacyBehavior>
                             <div className="card">
                                 <div className="card-badges">
                                     <Image src={badgeJS} alt="JS" className='tech-badge' width={48} height={16} />
@@ -207,7 +228,7 @@ export default function Code() {
                                     <span>Click on this tile to see more...</span>
                                 </div>
                                 <div className="card-image">
-                                    <Image src={reactClockCode} alt="Template" fill style={{objectFit: 'cover'}} />
+                                    <Image src={reactClockCode} alt="Template" />
                                 </div>
                             </div>
                         </Link>
