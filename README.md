@@ -156,174 +156,63 @@ Ensure all required environment variables are set:
 - `NEXT_PUBLIC_OPENWEATHER_API_KEY` - For weather data
 - `NEXT_PUBLIC_NEWSAPI_KEY` - For news feeds
 
-## Next.js 15 Migration (v4 Upgrade) ✅ COMPLETED
+## New Project Added: Currency Converter
 
-### Migration Overview
-Successfully upgraded from Next.js 13 to Next.js 15.4.6 with React 19. This major version upgrade introduced several breaking changes and new requirements that needed to be addressed.
+### Overview
+Successfully converted and integrated the Currency Converter project from a standalone Node.js/Express application into the Next.js portfolio structure. This financial tool allows users to convert between 30+ world currencies using real-time exchange rates.
 
-### Issues Encountered and Solutions
+### Key Features
+- **Smart Currency Management**: Users can build custom conversion lists by adding/removing currencies
+- **Dynamic Base Currency System**: Any currency becomes the base when you type in its input field
+- **Real-time Conversions**: Live calculations with proper number formatting as you type
+- **Persistent User Preferences**: localStorage remembers selected currencies between sessions
+- **API Rate Limiting Protection**: Graceful fallback to demo rates when API limits are exceeded
+- **Mobile-Responsive Design**: Optimized layout for all screen sizes
+- **30+ Major Currencies**: Complete with country flag icons for easy identification
 
-#### 1. Security Vulnerabilities ✅ FIXED
-**Issue:** 22 npm audit vulnerabilities (4 low, 12 moderate, 6 high)
+### Development History
+- **Source**: Migrated from https://github.com/peterajones/nodejs-currency-converter
+- **Architecture**: Vanilla JavaScript DOM manipulation → React hooks and state management
+- **API Strategy**: Express server endpoint → Direct Next.js client-side API calls
+- **Performance**: Optimized to only call Exchange Rates API when users enter amounts (prevents unnecessary rate limiting)
+- **Styling**: Custom CSS → SASS with `.cc` namespace to prevent conflicts with other projects
+- **Error Handling**: Robust fallback system for API failures and rate limits
 
-**Root Causes:**
-- `next-optimized-images` package pulling in outdated webpack dependencies
-- Outdated `prismjs` version with DOM Clobbering vulnerability  
-- Legacy `netlify-cli` dependencies with security issues
+### Technical Implementation
+- **Component**: `Components/projects/currency-converter/CurrencyConverter.js`
+- **Page**: `pages/projects/currency-converter/index.js`
+- **Styling**: `styles/partials/_currency-converter.scss`
+- **API**: Exchange Rates API (exchangeratesapi.io) with `NEXT_PUBLIC_EXCHANGE_RATES_API_KEY`
 
-**Solutions Implemented:**
-- **Removed `next-optimized-images`:** Eliminated 15 vulnerabilities from outdated webpack chain
-- **Updated `prismjs` to 1.30.0:** Fixed DOM Clobbering vulnerability
-- **Updated `netlify-cli` to 23.1.4:** Resolved dependency security issues
-- **Result:** Reduced vulnerabilities by 68% (22 → 7), eliminated all high-severity issues
+### Usage
+1. Visit `/projects/currency-converter` to access the tool
+2. Default currencies (CAD, USD, EUR, JPY) load automatically on first visit
+3. Click "Add Currency" to browse and select from 30+ available currencies
+4. Type any amount in any currency field to see live conversions across all selected currencies
+5. Remove currencies with the × button, reset amounts, or clear the entire list as needed
+6. Your currency selections are automatically saved and restored on future visits
 
-#### 2. App Router vs Pages Router Conflict ✅ FIXED
-**Issue:** `App Router and Pages Router both match path: /`
+### Current Status
+- ✅ Fully functional with complete React conversion
+- ✅ Responsive design with proper mobile optimization
+- ✅ localStorage persistence working correctly
+- ✅ Rate limiting protection with demo mode fallback
+- ⏸️ Live API calls temporarily paused due to monthly rate limit (resets next month)
 
-**Cause:** Next.js 15 fresh install includes `src/app/` directory, conflicting with existing `pages/` structure
+### Google Maps API Security ✅ SECURED (2025)
 
-**Solution:** Removed `src/app/` directory to maintain Pages Router architecture
-```bash
-rm -rf src/
-```
+**Security Method:** Google Cloud Console domain restrictions  
+**Implementation:** Simple `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` with HTTP referrer restrictions
 
-#### 3. SASS Deprecation Warnings ✅ FIXED
-**Issue:** Multiple deprecation warnings about `@import` statements being deprecated in Dart Sass 3.0.0
+**Security Features:**
+- ✅ **Domain Restrictions**: API key only works from allowed domains
+- ✅ **API Restrictions**: Limited to Maps JavaScript API, Places API, Geocoding API  
+- ✅ **Google Validation**: Google's servers validate referrer domain on every call
+- ✅ **Simple Implementation**: Clean code without unnecessary complexity
 
-**Solution:** Updated all SASS imports from `@import` to `@use`
-```scss
-// Before
-@import 'partials/_reset.scss';
-@import 'partials/_navbar.scss';
+**Key Insight:** API keys visible in browser are secure when properly restricted at the Google Cloud Console level. Domain validation is the real security barrier.
 
-// After  
-@use 'partials/_reset.scss';
-@use 'partials/_navbar.scss';
-```
-
-#### 4. Link Component Deprecation ✅ FIXED
-**Issue:** `legacyBehavior` prop deprecated warnings in Next.js Link components
-
-**Affected Files:**
-- `Components/Navbar.js` (3 instances)
-- `pages/news/index.js` (6 instances)  
-- `pages/projects/index.js` (7 instances)
-
-**Solution:** Removed all `legacyBehavior` and `passHref` props from Link components
-```jsx
-// Before
-<Link href="/projects" passHref legacyBehavior>
-  <div>Content</div>
-</Link>
-
-// After
-<Link href="/projects">
-  <div>Content</div>
-</Link>
-```
-
-#### 5. Nested Anchor Tag Hydration Error ✅ FIXED
-**Issue:** `In HTML, <a> cannot be a descendant of <a>` hydration error
-
-**Cause:** `<a className='item-title'>` tags nested inside Link components
-
-**Solution:** Changed nested `<a>` tags to `<div>` tags and updated corresponding CSS
-```jsx
-// Before
-<Link href="/news/item">
-  <a className='item-title'>Title</a>
-</Link>
-
-// After
-<Link href="/news/item">
-  <div className='item-title'>Title</div>
-</Link>
-```
-
-#### 6. ESLint Configuration ✅ FIXED
-**Issue:** `react/no-unescaped-entities` errors for apostrophes and quotes in JSX
-
-**Solution:** Disabled the rule in `eslint.config.mjs` for personal website use
-```javascript
-const eslintConfig = [
-  ...compat.extends("next/core-web-vitals"),
-  {
-    rules: {
-      "react/no-unescaped-entities": "off"
-    }
-  }
-];
-```
-
-#### 7. Image Component Issues ✅ FIXED
-**Issue 1:** Banner.js using deprecated `<img>` tag instead of Next.js `<Image>`
-**Solution:** Replaced with `<Image>` component with proper width/height props
-
-**Issue 2:** Missing project thumbnails after upgrade
-**Cause:** Using `next/legacy/image` and missing width/height props
-**Solutions:**
-- Changed import from `next/legacy/image` to `next/image`
-- Added proper dimensions to all project thumbnail images
-- Used `fill` prop with `object-fit: cover` for responsive, aspect-ratio-preserving images
-- Added CSS container styling for proper positioning
-
-```jsx
-// Before
-import Image from "next/legacy/image";
-<Image src={project} alt="Project" />
-
-// After  
-import Image from "next/image";
-<Image src={project} alt="Project" fill style={{objectFit: 'cover'}} />
-```
-
-### Migration Checklist
-- [x] Resolve security vulnerabilities  
-- [x] Fix router conflicts
-- [x] Update SASS syntax
-- [x] Remove deprecated Link props
-- [x] Fix hydration errors
-- [x] Configure ESLint rules
-- [x] Update Image components
-- [x] Test production build
-- [x] Verify all pages render correctly
-
-### Final Result
-- ✅ Clean production build with no errors or warnings
-- ✅ All 21 pages compile successfully  
-- ✅ Optimized bundle sizes maintained
-- ✅ Security vulnerabilities reduced by 68%
-- ✅ Modern Next.js 15 and React 19 compatibility
-- ✅ Ready for Netlify deployment
-
-### Project Image Cache Issues ✅ FIXED
-**Issue:** Project mini images not displaying on `/pages/projects/` page
-**Cause:** Next.js framework caching issues with `next/legacy/image` component
-**Solution:** Cache cleared automatically - images restored without code changes
-
-**Technical Notes:**
-- Images were present in DOM with `width: 0px; height: 0px` inline styles
-- Issue resolved through Next.js cache refresh, not code modification
-- Demonstrates framework opacity issues that can complicate debugging
-
-## Project Concept & Architecture
-
-This Next.js portfolio showcases vanilla JavaScript projects converted for React/Next.js while maintaining the original code display and cross-platform links.
-
-**Core Approach:**
-- Take common/vanilla JavaScript projects (mostly simple implementations)
-- Convert them to work within this React/Next.js portfolio environment
-- Display the original vanilla code locally for reference
-- Provide links to other conversions/implementations when applicable
-
-**Project Structure:**
-- `/pages/projects/` - Main projects listing with thumbnail cards
-- `/pages/projects/[project-name]/` - Individual project pages with live demos
-- `/Components/projects/[project-name]/` - React components for each converted project
-- `/public/images/code/` - Project thumbnail images and assets
-- Original vanilla JS code displayed alongside React implementations
-
-This approach demonstrates both fundamental JavaScript skills and framework adaptation abilities.
+---
 
 ## Documentation, videos, how-to's etc...
 1. [YouTube tutorial](https://www.youtube.com/watch?v=AdcktATbd-I)
