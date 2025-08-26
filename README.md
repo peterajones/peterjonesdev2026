@@ -296,6 +296,35 @@ import Image from "next/image";
 - ✅ Modern Next.js 15 and React 19 compatibility
 - ✅ Ready for Netlify deployment
 
+### Project Image Cache Issues ✅ FIXED
+**Issue:** Project mini images not displaying on `/pages/projects/` page
+**Cause:** Next.js framework caching issues with `next/legacy/image` component
+**Solution:** Cache cleared automatically - images restored without code changes
+
+**Technical Notes:**
+- Images were present in DOM with `width: 0px; height: 0px` inline styles
+- Issue resolved through Next.js cache refresh, not code modification
+- Demonstrates framework opacity issues that can complicate debugging
+
+## Project Concept & Architecture
+
+This Next.js portfolio showcases vanilla JavaScript projects converted for React/Next.js while maintaining the original code display and cross-platform links.
+
+**Core Approach:**
+- Take common/vanilla JavaScript projects (mostly simple implementations)
+- Convert them to work within this React/Next.js portfolio environment
+- Display the original vanilla code locally for reference
+- Provide links to other conversions/implementations when applicable
+
+**Project Structure:**
+- `/pages/projects/` - Main projects listing with thumbnail cards
+- `/pages/projects/[project-name]/` - Individual project pages with live demos
+- `/Components/projects/[project-name]/` - React components for each converted project
+- `/public/images/code/` - Project thumbnail images and assets
+- Original vanilla JS code displayed alongside React implementations
+
+This approach demonstrates both fundamental JavaScript skills and framework adaptation abilities.
+
 ## Documentation, videos, how-to's etc...
 1. [YouTube tutorial](https://www.youtube.com/watch?v=AdcktATbd-I)
 2. [NextAuth.js Documentation](https://next-auth.js.org/)

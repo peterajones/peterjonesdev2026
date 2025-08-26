@@ -16,6 +16,7 @@ import passwordGenerator from "../../public/images/code/password-generator.jpeg"
 import weatherApp from "../../public/images/code/weather-app.jpeg";
 import CurrencyConverter from "../../public/images/code/currency-converter.jpg";
 
+
 export default function Code() {
 	const [didMount, setDidMount] = useState(false);
 	const [scroll, setScroll] = useState(0);
@@ -42,7 +43,7 @@ export default function Code() {
                 <h1 className='projects page'>Projects</h1>
                 <ul className='items-container'>
                     <li className='item'>
-                        <Link href='/projects/currency-converter' passHref legacyBehavior>
+                        <Link href='/projects/currency-converter' passHref>
                             <div className="card">
                                 <div className="card-badges">
                                     <Image src={badgeHTML} alt="HTML" className='tech-badge' width={48} height={16} />
@@ -62,7 +63,7 @@ export default function Code() {
                         </Link>
                     </li>
                     <li className='item'>
-                        <Link href='/projects/weather-app' passHref legacyBehavior>
+                        <Link href='/projects/weather-app' passHref>
                             <div className="card">
                                 <div className="card-badges">
                                     <Image src={badgeHTML} alt="HTML" className='tech-badge' width={48} height={16} />
@@ -82,7 +83,7 @@ export default function Code() {
                         </Link>
                     </li>
                     <li className='item'>
-                        <Link href='/projects/random-password-generator' passHref legacyBehavior>
+                        <Link href='/projects/random-password-generator' passHref>
                             <div className="card">
                                 <div className="card-badges">
                                     <Image src={badgeREACT} alt="React"  className='tech-badge' width={48} height={16}/>
@@ -109,7 +110,7 @@ export default function Code() {
                         </Link>
                     </li>
                     <li className='item'>
-                        <Link href='/projects/pagination' passHref legacyBehavior>
+                        <Link href='/projects/pagination' passHref>
                             <div className="card">
                                 <div className="card-badges">
                                     <Image src={badgeREACT} alt="React" className='tech-badge' width={48} height={16} />
@@ -132,7 +133,7 @@ export default function Code() {
                         </Link>
                     </li>
                     <li className='item'>
-                        <Link href='/projects/checkbox-styling' passHref legacyBehavior>
+                        <Link href='/projects/checkbox-styling' passHref>
                             <div className="card">
                                 <div className="card-badges">
                                     <Image src={badgeHTML} alt="HTML" className='tech-badge' width={48} height={16} />
@@ -159,7 +160,7 @@ export default function Code() {
                         </Link>
                     </li>
                     <li className='item'>
-                        <Link href='/projects/pizza-pie' passHref legacyBehavior>
+                        <Link href='/projects/pizza-pie' passHref>
                             <div className="card">
                                 <div className="card-badges">
                                     <Image src={badgeHTML} alt="HTML" className='tech-badge' width={48} height={16} />
@@ -184,7 +185,7 @@ export default function Code() {
                         </Link>
                     </li>
                     <li className='item'>
-                        <Link href='/projects/rollup-counter' passHref legacyBehavior>
+                        <Link href='/projects/rollup-counter' passHref>
                             <div className="card">
                                 <div className="card-badges">
                                     <Image src={badgeCSS} alt="CSS" className='tech-badge' width={48} height={16} />
@@ -211,7 +212,7 @@ export default function Code() {
                         </Link>
                     </li>
                     <li className='item'>
-                        <Link href='/projects/js-clock' passHref legacyBehavior>
+                        <Link href='/projects/js-clock' passHref>
                             <div className="card">
                                 <div className="card-badges">
                                     <Image src={badgeJS} alt="JS" className='tech-badge' width={48} height={16} />
