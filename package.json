@@ -28,7 +28,7 @@
     "react-dom": "19.1.0",
     "react-syntax-highlighter": "^15.6.1",
     "react-transition-group": "^4.4.5",
-    "sass": "^1.72.0",
+    "sass": "^1.91.0",
     "sharp": "^0.34.3",
     "url": "^0.11.3"
   },
