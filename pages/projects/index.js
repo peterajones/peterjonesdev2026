@@ -1,12 +1,13 @@
 import {useState, useEffect} from 'react'
 import Head from 'next/head';
 import Link from 'next/link';
-import Image from "next/legacy/image";
+import Image from "next/image";
 import Banner from '../../Components/Banner'
 import badgeHTML from "../../public/images/code/badge-HTML.png";
 import badgeCSS from "../../public/images/code/badge-CSS.png";
 import badgeJS from "../../public/images/code/badge-JS.png";
 import badgeREACT from "../../public/images/code/badge-REACT.png";
+import badgeNODE from "../../public/images/code/badge-Nodejs.png";
 import reactClockCode from "../../public/images/code/react-clock-code.jpg";
 import rollupCounter from "../../public/images/code/rollup-counter.jpg";
 import pizzaPie from "../../public/images/code/pizza-pie.jpg";
@@ -45,10 +46,11 @@ export default function Code() {
                     <li className='item'>
                         <Link href='/projects/currency-converter' passHref>
                             <div className="card">
-                                <div className="card-badges">
+                                <div className="card-badges" style={{ display: 'flex' }}>
                                     <Image src={badgeHTML} alt="HTML" className='tech-badge' width={48} height={16} />
                                     <Image src={badgeCSS} alt="CSS" className='tech-badge' width={48} height={16} />
                                     <Image src={badgeJS} alt="JS" className='tech-badge' width={48} height={16} />
+                                    <Image src={badgeNODE} alt="NODE" className='tech-badge' width={48} height={16} />
                                 </div>
                                 <div className="card-title">
                                     <span>Currency Converter</span>
@@ -56,8 +58,8 @@ export default function Code() {
                                 <div className="card-intro truncate">
                                     <span>A handy currnecy converter</span>
                                 </div>
-                                <div className="card-image">
-                                    <Image src={CurrencyConverter} alt="Currency Converter" />
+                                <div className="card-image" style={{position: 'relative', height: '200px'}}>
+                                    <Image src={CurrencyConverter} alt="Currency Converter" fill style={{objectFit: 'cover'}} />
                                 </div>
                             </div>
                         </Link>
@@ -65,7 +67,7 @@ export default function Code() {
                     <li className='item'>
                         <Link href='/projects/weather-app' passHref>
                             <div className="card">
-                                <div className="card-badges">
+                                <div className="card-badges" style={{ display: 'flex' }}>
                                     <Image src={badgeHTML} alt="HTML" className='tech-badge' width={48} height={16} />
                                     <Image src={badgeCSS} alt="CSS" className='tech-badge' width={48} height={16} />
                                     <Image src={badgeJS} alt="JS" className='tech-badge' width={48} height={16} />
@@ -76,8 +78,8 @@ export default function Code() {
                                 <div className="card-intro truncate">
                                     <span>A Weather App with a 5 day forecast.</span>
                                 </div>
-                                <div className="card-image">
-                                    <Image src={weatherApp} alt="Weather App" />
+                                <div className="card-image" style={{position: 'relative', height: '200px'}}>
+                                    <Image src={weatherApp} alt="Weather App" fill style={{objectFit: 'cover'}} />
                                 </div>
                             </div>
                         </Link>
@@ -85,7 +87,7 @@ export default function Code() {
                     <li className='item'>
                         <Link href='/projects/random-password-generator' passHref>
                             <div className="card">
-                                <div className="card-badges">
+                                <div className="card-badges" style={{ display: 'flex' }}>
                                     <Image src={badgeREACT} alt="React"  className='tech-badge' width={48} height={16}/>
                                     <Image src={badgeJS} alt="JS" className='tech-badge' width={48} height={16} />
                                 </div>
@@ -100,10 +102,12 @@ export default function Code() {
                                         password.
                                     </span>
                                 </div>
-                                <div className="card-image">
+                                <div className="card-image" style={{position: 'relative', height: '200px'}}>
                                     <Image
                                         src={passwordGenerator}
                                         alt="Random Password Generator"
+                                        fill
+                                        style={{objectFit: 'cover'}}
                                     />
                                 </div>
                             </div>
@@ -112,7 +116,7 @@ export default function Code() {
                     <li className='item'>
                         <Link href='/projects/pagination' passHref>
                             <div className="card">
-                                <div className="card-badges">
+                                <div className="card-badges" style={{ display: 'flex' }}>
                                     <Image src={badgeREACT} alt="React" className='tech-badge' width={48} height={16} />
                                     <Image src={badgeJS} alt="JS" className='tech-badge' width={48} height={16} />
                                 </div>
@@ -126,8 +130,8 @@ export default function Code() {
                                     </span>
                                     <span>Lots going on in this one!</span>
                                 </div>
-                                <div className="card-image">
-                                    <Image src={pagination} alt="Pagination" />
+                                <div className="card-image" style={{position: 'relative', height: '200px'}}>
+                                    <Image src={pagination} alt="Pagination" fill style={{objectFit: 'cover'}} />
                                 </div>
                             </div>
                         </Link>
@@ -135,7 +139,7 @@ export default function Code() {
                     <li className='item'>
                         <Link href='/projects/checkbox-styling' passHref>
                             <div className="card">
-                                <div className="card-badges">
+                                <div className="card-badges" style={{ display: 'flex' }}>
                                     <Image src={badgeHTML} alt="HTML" className='tech-badge' width={48} height={16} />
                                     <Image src={badgeCSS} alt="CSS" className='tech-badge' width={48} height={16} />
                                 </div>
@@ -153,8 +157,8 @@ export default function Code() {
                                     </span>
                                     <span>Click on this tile to see more...</span>
                                 </div>
-                                <div className="card-image">
-                                    <Image src={checkboxStyling} alt="Checkbox Styling" />
+                                <div className="card-image" style={{position: 'relative', height: '200px'}}>
+                                    <Image src={checkboxStyling} alt="Checkbox Styling" fill style={{objectFit: 'cover'}} />
                                 </div>
                             </div>
                         </Link>
@@ -162,7 +166,7 @@ export default function Code() {
                     <li className='item'>
                         <Link href='/projects/pizza-pie' passHref>
                             <div className="card">
-                                <div className="card-badges">
+                                <div className="card-badges" style={{ display: 'flex' }}>
                                     <Image src={badgeHTML} alt="HTML" className='tech-badge' width={48} height={16} />
                                     <Image src={badgeCSS} alt="CSS" className='tech-badge' width={48} height={16} />
                                     <Image src={badgeJS} alt="JS" className='tech-badge' width={48} height={16} />
@@ -178,8 +182,8 @@ export default function Code() {
                                     </span>
                                     <span>Click on this tile to see more...</span>
                                 </div>
-                                <div className="card-image">
-                                    <Image src={pizzaPie} alt="Pizza Pie" />
+                                <div className="card-image" style={{position: 'relative', height: '200px'}}>
+                                    <Image src={pizzaPie} alt="Pizza Pie" fill style={{objectFit: 'cover'}} />
                                 </div>
                             </div>
                         </Link>
@@ -187,7 +191,7 @@ export default function Code() {
                     <li className='item'>
                         <Link href='/projects/rollup-counter' passHref>
                             <div className="card">
-                                <div className="card-badges">
+                                <div className="card-badges" style={{ display: 'flex' }}>
                                     <Image src={badgeCSS} alt="CSS" className='tech-badge' width={48} height={16} />
                                     <Image src={badgeJS} alt="JS" className='tech-badge' width={48} height={16} />
                                 </div>
@@ -205,8 +209,8 @@ export default function Code() {
                                         the increment.
                                     </span>
                                 </div>
-                                <div className="card-image">
-                                    <Image src={rollupCounter} alt="Rollup Counter" />
+                                <div className="card-image" style={{position: 'relative', height: '200px'}}>
+                                    <Image src={rollupCounter} alt="Rollup Counter" fill style={{objectFit: 'cover'}} />
                                 </div>
                             </div>
                         </Link>
@@ -214,7 +218,7 @@ export default function Code() {
                     <li className='item'>
                         <Link href='/projects/js-clock' passHref>
                             <div className="card">
-                                <div className="card-badges">
+                                <div className="card-badges" style={{ display: 'flex' }}>
                                     <Image src={badgeJS} alt="JS" className='tech-badge' width={48} height={16} />
                                 </div>
                                 <div className="card-title">
@@ -228,8 +232,8 @@ export default function Code() {
                                     </span>
                                     <span>Click on this tile to see more...</span>
                                 </div>
-                                <div className="card-image">
-                                    <Image src={reactClockCode} alt="Template" />
+                                <div className="card-image" style={{position: 'relative', height: '200px'}}>
+                                    <Image src={reactClockCode} alt="Template" fill style={{objectFit: 'cover'}} />
                                 </div>
                             </div>
                         </Link>
