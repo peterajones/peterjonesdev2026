@@ -1,11 +1,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
-export async function getStaticProps() {
-  return { props: {} }
-}
-
-export default function Home() {
+export default function ContactForm() {
   const router = useRouter();
   const [formData, setFormData] = useState({
     name: '',
@@ -20,22 +16,30 @@ export default function Home() {
     });
   };
 
+  const encode = (data) => {
+    return Object.keys(data)
+      .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+      .join("&");
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const form = e.target;
-    const formDataToSend = new FormData(form);
 
     try {
       const response = await fetch('/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(formDataToSend).toString()
+        body: encode({
+          'form-name': 'contact',
+          'bot-field': '',
+          ...formData
+        })
       });
 
       if (response.ok) {
         router.push('/contact/success');
       } else {
+        console.error('Form submission failed:', response.status, response.statusText);
         alert('Form submission failed. Please try again.');
       }
     } catch (error) {
