@@ -1,4 +1,26 @@
+'use client';
+import { useRouter } from 'next/router';
+
 export default function ContactForm() {
+  const router = useRouter();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+
+    try {
+      await fetch('/__forms.html', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData).toString()
+      });
+      router.push('/contact/success');
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Form submission failed. Please try again.');
+    }
+  };
+
   return (
     <>
       <div className='container'>
@@ -8,7 +30,7 @@ export default function ContactForm() {
 
           <div className='grid'>
             <div className='form-container'>
-              <form name="contact" method="POST" action="/contact/success" data-netlify="true" netlify-honeypot="bot-field">
+              <form name="contact" onSubmit={handleSubmit}>
                 <input type="hidden" name="form-name" value="contact" />
                 <p style={{ display: 'none' }}>
                   <label>Don't fill this out if you're human: <input name="bot-field" /></label>
