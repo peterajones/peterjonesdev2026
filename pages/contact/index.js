@@ -40,4 +40,8 @@ const Contact = props => {
 	);
 };
 
+export async function getStaticProps() {
+  return { props: {} };
+}
+
 export default Contact;
