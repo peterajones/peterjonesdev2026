@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
-import Head from 'next/head'
-// import styles from '../styles/Home.module.css'
+
+export async function getStaticProps() {
+  return { props: {} }
+}
 
 export default function Home() {
   const [success, setSuccess] = useState(false);
