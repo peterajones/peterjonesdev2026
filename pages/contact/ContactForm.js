@@ -31,6 +31,9 @@ export default function Home() {
             <div className='form-container'>
               <form name="contact" method="POST" action="/contact/success" netlify-honeypot="bot-field" data-netlify="true">
                 <input type="hidden" name="form-name" value="contact" />
+                <p style={{ display: 'none' }}>
+                  <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+                </p>
                 <p>
                   <label htmlFor="name">Name</label>
                   <input type="text" id="name" name="name" />
