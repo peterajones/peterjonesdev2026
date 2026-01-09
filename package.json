@@ -21,7 +21,7 @@
     "fs": "^0.0.1-security",
     "https": "^1.0.0",
     "netlify-cli": "^23.1.4",
-    "next": "15.4.6",
+    "next": "15.4.8",
     "nprogress": "^0.2.0",
     "prismjs": "^1.30.0",
     "react": "19.1.0",

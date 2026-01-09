@@ -12,6 +12,31 @@ export default function UpdatesList(props) {
 					<div className='updates-container-inner'>
 						<div className='update-content'>
 							<div className='update-date'>
+								January <span className='update-date'>09</span> 2026
+							</div>
+							<div className='update-details'>
+								I decided to update the site to use the latest NextJS 15 features,
+								including the new app directory structure and server components.
+								This should improve performance and maintainability. Also, I
+								added a new code snippet for a 'Dark Mode Toggle' component that
+								can be easily integrated into any React project. Enjoy!
+							</div>
+						</div>
+						<div className='update-content'>
+							<div className='update-date'>
+								June <span className='update-date'>12</span> 2022
+							</div>
+							<div className='update-details'>
+								It's been a while! This site has been rebuilt with NextJS. It
+								went live back in January 2022 but there were quite a few things
+								that needed fixing and I haven't had much time to work on this.
+								This morning I added a fix for the syntax highlighting in the
+								code blocks. It turns out that NextJS needs a little help for
+								Prism to work correctly.
+							</div>
+						</div>
+						<div className='update-content'>
+							<div className='update-date'>
 								December <span className='update-date'>28</span> 2023
 							</div>
 							<div className='update-details'>
