@@ -3,9 +3,7 @@ import Head from 'next/head';
 import Image from "next/legacy/image";
 import styles from '../../styles/News.module.scss';
 
-const FEED_URL = 'https://www.cbc.ca/webfeed/rss/rss-topstories';
-const CORS_PROXY = 'https://my-dev-proxy-server.herokuapp.com/';
-const URL_TO_FETCH = CORS_PROXY + FEED_URL;
+const URL_TO_FETCH = '/api/rss/cbc-top-stories';
 
 const CBCTopStories = () => {
 	const [theme, setTheme] = useState('');
@@ -78,7 +76,7 @@ const CBCTopStories = () => {
 							height='64'
 							unoptimized={true}
 						/>
-						<p>Proxy server is warming up...</p>
+						<p>Loading feed...</p>
 					</>
 				) : isLoading && theme === 'dark' ? (
 					<>
@@ -89,7 +87,7 @@ const CBCTopStories = () => {
 							height='64'
 							unoptimized={true}
 						/>
-						<p>Proxy server is warming up...</p>
+						<p>Loading feed...</p>
 					</>
 				) : (
 					''

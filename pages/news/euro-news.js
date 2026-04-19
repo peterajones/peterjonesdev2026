@@ -3,10 +3,7 @@ import Head from 'next/head';
 import Image from "next/legacy/image";
 import styles from '../../styles/News.module.scss';
 
-const FEED_URL =
-	'https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=19794221';
-const CORS_PROXY = 'https://my-dev-proxy-server.herokuapp.com/';
-const URL_TO_FETCH = CORS_PROXY + FEED_URL;
+const URL_TO_FETCH = '/api/rss/euro-news';
 
 const CNBCEuroNews = () => {
 	const [theme, setTheme] = useState('');
@@ -88,7 +85,7 @@ const CNBCEuroNews = () => {
 							height='64'
 							unoptimized={true}
 						/>
-						<p>Proxy server is warming up...</p>
+						<p>Loading feed...</p>
 					</>
 				) : isLoading && theme === 'dark' ? (
 					<>
@@ -99,7 +96,7 @@ const CNBCEuroNews = () => {
 							height='64'
 							unoptimized={true}
 						/>
-						<p>Proxy server is warming up...</p>
+						<p>Loading feed...</p>
 					</>
 				) : (
 					''

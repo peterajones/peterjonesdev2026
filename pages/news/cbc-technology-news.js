@@ -3,9 +3,7 @@ import Head from 'next/head';
 import Image from "next/legacy/image";
 import styles from '../../styles/News.module.scss';
 
-const FEED_URL = 'https://www.cbc.ca/webfeed/rss/rss-technology';
-const CORS_PROXY = 'https://my-dev-proxy-server.herokuapp.com/';
-const URL_TO_FETCH = CORS_PROXY + FEED_URL;
+const URL_TO_FETCH = '/api/rss/cbc-technology';
 
 const CBCTechnologyNews = () => {
 	const [theme, setTheme] = useState('');
@@ -77,7 +75,7 @@ const CBCTechnologyNews = () => {
 							height='64'
 							unoptimized={true}
 						/>
-						<p>Proxy server is warming up...</p>
+						<p>Loading feed...</p>
 					</>
 				) : isLoading && theme === 'dark' ? (
 					<>
@@ -88,7 +86,7 @@ const CBCTechnologyNews = () => {
 							height='64'
 							unoptimized={true}
 						/>
-						<p>Proxy server is warming up...</p>
+						<p>Loading feed...</p>
 					</>
 				) : (
 					''
