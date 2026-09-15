@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 const weatherURL = 'https://api.openweathermap.org/data/2.5/weather';
 const forecastURL = 'https://api.openweathermap.org/data/2.5/forecast';
@@ -41,17 +41,10 @@ const SearchComponent = () => {
 	});
 	const [suggestions, setSuggestions] = useState([]);
 	const [showSuggestions, setShowSuggestions] = useState(false);
-	const autocompleteService = useRef(null);
-	const placesService = useRef(null);
-	
+
 	useEffect(() => {
 		setMounted(true);
 		setAddress('Toronto, ON, Canada');
-		// Initialize Google Maps Places API when component mounts
-		if (window.google?.maps?.places) {
-			autocompleteService.current = new window.google.maps.places.AutocompleteService();
-			placesService.current = new window.google.maps.places.PlacesService(document.createElement('div'));
-		}
 	}, []);
 	
 	if (!mounted) {
@@ -68,58 +61,45 @@ const SearchComponent = () => {
 		setShowSuggestions(false);
 	};
 
-	const handleInputChange = (e) => {
+	const handleInputChange = async (e) => {
 		const value = e.target.value;
 		setAddress(value);
-		
-		if (value.length > 2 && autocompleteService.current) {
-			const request = {
-				input: value,
-				types: ['(cities)']
-			};
-			
-			// Add timeout to detect if callback is never called
-			const timeoutId = setTimeout(() => {
-				console.error('Autocomplete request timed out - callback never called');
-				console.error('This usually indicates:');
-				console.error('1. Billing not enabled for Google Cloud project');
-				console.error('2. Places API quota exceeded');
-				console.error('3. API key lacks Places API permissions');
-				console.error('4. Network or CORS issues');
-			}, 5000);
-			
-			autocompleteService.current.getPlacePredictions(request, (predictions, status) => {
-				clearTimeout(timeoutId);
-				
-				if (status === window.google.maps.places.PlacesServiceStatus.OK && predictions) {
-					setSuggestions(predictions);
-					setShowSuggestions(true);
-				} else {
-					console.log('Autocomplete failed. Status:', status, 'Predictions:', predictions);
-					setSuggestions([]);
-					setShowSuggestions(false);
-				}
-			});
+
+		if (value.length > 2 && window.google?.maps?.places?.AutocompleteSuggestion) {
+			try {
+				const { suggestions: results } =
+					await window.google.maps.places.AutocompleteSuggestion.fetchAutocompleteSuggestions({
+						input: value,
+						includedPrimaryTypes: ['locality']
+					});
+				setSuggestions(results || []);
+				setShowSuggestions(Boolean(results?.length));
+			} catch (error) {
+				console.error('Autocomplete request failed:', error);
+				setSuggestions([]);
+				setShowSuggestions(false);
+			}
 		} else {
 			setSuggestions([]);
 			setShowSuggestions(false);
 		}
 	};
 
-	const handleSelect = (placeId, description) => {
-		setAddress(description);
+	const handleSelect = async (suggestion) => {
+		setAddress(suggestion.placePrediction.text.text);
 		setShowSuggestions(false);
-		
-		if (placesService.current) {
-			const request = { placeId: placeId };
-			placesService.current.getDetails(request, (place, status) => {
-				if (status === window.google.maps.places.PlacesServiceStatus.OK && place.geometry) {
-					setCoordinates({
-						lat: place.geometry.location.lat(),
-						lng: place.geometry.location.lng()
-					});
-				}
-			});
+
+		try {
+			const place = suggestion.placePrediction.toPlace();
+			await place.fetchFields({ fields: ['location'] });
+			if (place.location) {
+				setCoordinates({
+					lat: place.location.lat(),
+					lng: place.location.lng()
+				});
+			}
+		} catch (error) {
+			console.error('Failed to fetch place details:', error);
 		}
 	};
 
@@ -245,15 +225,6 @@ const SearchComponent = () => {
 		};
 	};
 
-	const onLoad = () => {
-		if (window.google?.maps?.places) {
-			autocompleteService.current = new window.google.maps.places.AutocompleteService();
-			placesService.current = new window.google.maps.places.PlacesService(document.createElement('div'));
-		} else {
-			console.error('Google Maps Places API not available');
-		}
-	};
-
 	return (
 		<div className='weatherContainer'>
 			<h1>
@@ -280,7 +251,7 @@ const SearchComponent = () => {
 					<div className='autocompleteDropdownContainer'>
 						{suggestions.map((suggestion) => (
 							<div
-								key={suggestion.place_id}
+								key={suggestion.placePrediction.placeId}
 								className='suggestion-item'
 								style={{
 									backgroundColor: '#ffffff',
@@ -295,9 +266,9 @@ const SearchComponent = () => {
 									e.target.style.backgroundColor = '#ffffff';
 									e.target.style.color = 'initial';
 								}}
-								onClick={() => handleSelect(suggestion.place_id, suggestion.description)}
+								onClick={() => handleSelect(suggestion)}
 							>
-								<span>{suggestion.description}</span>
+								<span>{suggestion.placePrediction.text.text}</span>
 							</div>
 						))}
 					</div>
