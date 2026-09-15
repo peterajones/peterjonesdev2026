@@ -102,4 +102,45 @@ export default function ContactForm() {
 
 ---
 
-*Last updated: January 9, 2026*
+## Google Places Autocomplete (weather-app) ✅ FIXED (September 2026)
+
+### Problem
+The weather-app's city search field (Google Places autocomplete) stopped working. Console showed:
+```
+As of March 1st, 2025, google.maps.places.AutocompleteService is not
+available to new customers. Please use
+google.maps.places.AutocompleteSuggestion instead.
+```
+
+### Root Cause
+Two separate issues, both on the Google Cloud/API side of a March 1, 2025 change, not app logic:
+
+1. **Deprecated classes.** `google.maps.places.AutocompleteService` and `PlacesService` (callback-based) are no longer available to any API key/project created after March 1, 2025. The replacements are `google.maps.places.AutocompleteSuggestion.fetchAutocompleteSuggestions()` (predictions) and `placePrediction.toPlace()` + `place.fetchFields()` (place details/coordinates) — both async/Promise-based.
+2. **CSP blocked the new endpoint.** The new classes call `places.googleapis.com` (a different host than the classic `maps.googleapis.com` script loader). The site's CSP `connect-src` only allowlisted `maps.googleapis.com`, so the browser silently blocked the new API calls in production even after the code migration, surfacing as `RpcError: Rpc failed due to xhr error` in the console.
+
+### Solution
+
+1. Migrated `Components/projects/weather-app/WeatherApp.js` off `AutocompleteService`/`PlacesService` to `AutocompleteSuggestion.fetchAutocompleteSuggestions({ input, includedPrimaryTypes: ['locality'] })` and `suggestion.placePrediction.toPlace().fetchFields({ fields: ['location'] })`.
+2. Added `https://places.googleapis.com` to `connect-src` in the CSP defined in `next.config.js`.
+3. In Google Cloud Console, checked **"Places API (New)"** under the API key's API restrictions — separate from the legacy "Places API" that was already enabled, since the new classes hit a different REST endpoint.
+
+### Key Implementation Details
+
+1. **API shape changed:** the new methods are async and return `{ suggestions }` / a `Place` object, not callback + status-code (`PlacesServiceStatus.OK`) pairs.
+2. **Suggestion shape:** `suggestion.placePrediction.placeId` / `.text.text`, not `.place_id` / `.description`.
+3. **CSP:** any new Google API surface that calls a REST endpoint different from the script-loader host (`maps.googleapis.com`) needs its own `connect-src` entry — the browser blocks it client-side regardless of correct Cloud Console API-key configuration.
+4. **`@react-google-maps/api`'s `<LoadScript>`** (used in `Components/MapsProvider.js`) already appends `&loading=async`, so no change was needed there.
+5. A cosmetic `InvalidValueError: <callback> is not a function` console error from Google's own loader script is a known harmless quirk of this loading style; not worth chasing.
+6. A `google.maps.places.PlacesService is not available to new customers` console warning may appear intermittently even after full migration (no code calls it) — reproduced as non-deterministic across identical test runs on both this repo and the `peterjonesdev2027` rebuild; treated as Google-side console noise, not an app issue.
+
+### Testing
+- Verified locally (`next dev`) and against production: city autocomplete returns suggestions and selecting one correctly sets coordinates for the weather lookup, with no CSP violations or RPC errors in the console.
+
+### Related Files
+- `Components/projects/weather-app/WeatherApp.js` - Weather app search/autocomplete component
+- `Components/MapsProvider.js` - `<LoadScript>` wrapper (loads the `places` library site-wide)
+- `next.config.js` - CSP headers (`connect-src` must include both `maps.googleapis.com` and `places.googleapis.com`)
+
+---
+
+*Last updated: September 15, 2026*
